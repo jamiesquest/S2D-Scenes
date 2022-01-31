@@ -7,6 +7,8 @@ local _W, _H, _CX, _CY = relayout._W, relayout._H, relayout._CX, relayout._CY
 
 local scene = composer.newScene()
 
+local myRect
+
 local function touch(event)
 
     if event.phase == "began" then
@@ -15,15 +17,26 @@ local function touch(event)
 end
 
 local function update()
-    print("update")
+    --print("update")
+end
+
+function listener1 (obj)
+  print("anim1 complete")
+
+
+end
+
+function listener2 (obj)
+  print("anim2 complete")
+  myRect.canTap = true
 end
 
 --create
 function scene:create(event)
     print("GAME - Scene Create")
-    
+
     local groupMain = self.view
-    
+
     local title = display.newText("Game State", _CX, 100);
     groupMain:insert(title)
 
@@ -35,6 +48,18 @@ function scene:create(event)
         composer.gotoScene("scenes.menu")
     end)
 
+    myRect = display.newRect(groupMain, _CX, _CY, 100, 100)
+    myRect.canTap = true
+    myRect:addEventListener("tap", function()
+        if myRect.canTap then
+          print("Rectangle pressed")
+          myRect.canTap = false
+          transition.to(myRect, {time = 500, alpha = 0.0, onComplete = listener1})
+          transition.to(myRect, {time = 500, delay=500, alpha = 1.0, onComplete = listener2 })
+        end
+
+
+    end)
     --Create event listeners
     Runtime:addEventListener("enterFrame", update)
     Runtime:addEventListener("touch", touch)
@@ -76,4 +101,3 @@ scene:addEventListener("hide", scene)
 scene:addEventListener("destroy", scene)
 
 return scene
-
