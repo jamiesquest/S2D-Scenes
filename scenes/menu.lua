@@ -17,14 +17,28 @@ function scene:create(event)
     local title = display.newText("main menu", _CX, 50);
     groupMain:insert(title)
 
+    -- Buttons
     local btnPlay = display.newText("Tap to Start", _CX, _CY)
     groupMain:insert(btnPlay)
+
+    local btnPlay2 = display.newText( "Pie Slice Collision 1", _CX, _CY + 50 )
+    groupMain:insert(btnPlay2)
+    local btnPlay3 = display.newText( "Pie Slice Collision 2", _CX, _CY + 100 )
+    groupMain:insert(btnPlay3)
 
     local btnSettings = display.newText("settings", _CX, _H - 50)
     groupMain:insert(btnSettings)
 
+    --Button Event Listeners
     btnPlay:addEventListener("tap", function()
-        composer.gotoScene("scenes.game")
+        composer.gotoScene("scenes.game2")
+    end)
+
+    btnPlay2:addEventListener("tap", function()
+        composer.gotoScene("scenes.psCollision1")
+    end)
+    btnPlay3:addEventListener("tap", function()
+        composer.gotoScene("scenes.psCollision2")
     end)
 
     btnSettings:addEventListener("tap", function()
@@ -64,5 +78,3 @@ scene:addEventListener("hide", scene)
 scene:addEventListener("destroy", scene)
 
 return scene
-
-
